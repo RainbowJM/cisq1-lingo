@@ -26,19 +26,15 @@ Feature: Train lingo
     And the round was lost
     Then I cannot start a new round
 
-  Scenario: Guessing a word
-    When I guess a word
-    Then the word I guessed wil be checked
-
   Scenario Outline: Check the word that was guessed
     Given the word to guess in this round is "<word>"
     When I give my "<guess>"
     Then I will get a "<feedback>"
 
     Examples:
-      | word    | guess | feedback  |
-      | apple   | adopt | incorrect |
-      | apple   | alibi | incorrect |
-      | apple   | alias | incorrect |
-      | apple   | apple | correct   |
+      | word    | guess |               feedback                      |
+      | APPLE   | ADOPT | CORRECT, ABSENT, ABSENT, PRESENT, ABSENT    |
+      | APPLE   | ALIBI | ABSENT, ABSENT, ABSENT, ABSENT, ABSENT      |
+      | APPLE   | alias | ABSENT, ABSENT, ABSENT, ABSENT, ABSENT      |
+      | APPLE   | APPLE | CORRECT, CORRECT, CORRECT, CORRECT, CORRECT |
 
