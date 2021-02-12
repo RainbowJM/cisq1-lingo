@@ -32,9 +32,19 @@ Feature: Train lingo
     Then I will get a "<feedback>"
 
     Examples:
-      | word    | guess |               feedback                      |
-      | APPLE   | ADOPT | CORRECT, ABSENT, ABSENT, PRESENT, ABSENT    |
-      | APPLE   | ALIBI | ABSENT, ABSENT, ABSENT, ABSENT, ABSENT      |
-      | APPLE   | alias | ABSENT, ABSENT, ABSENT, ABSENT, ABSENT      |
-      | APPLE   | APPLE | CORRECT, CORRECT, CORRECT, CORRECT, CORRECT |
+      | word  | guess | feedback                                    |
+      | APPLE | ADOPT | CORRECT, ABSENT, ABSENT, PRESENT, ABSENT    |
+      | APPLE | ALIBI | ABSENT, ABSENT, ABSENT, ABSENT, ABSENT      |
+      | APPLE | ALIAS | ABSENT, ABSENT, ABSENT, ABSENT, ABSENT      |
+      | APPLE | APPLE | CORRECT, CORRECT, CORRECT, CORRECT, CORRECT |
 
+  Scenario: win the game
+    Given I am playing a game
+    When I successfully guessed the word
+    Then the score will be increased
+
+  Scenario: game over
+    Given I am playing a game
+    When I try to guess a word
+    And I guessed the correct word
+    Then I won the game
