@@ -54,5 +54,38 @@ class FeedbackTest {
         assertFalse(feedback.isWordInvalid());
     }
 
+    @Test
+    @DisplayName("feedback different, when value is different")
+    void feedbackDifferent() {
+        Feedback feedback1 = new Feedback(List.of(Mark.ABSENT,Mark.CORRECT, Mark.CORRECT,Mark.PRESENT));
+        Feedback feedback2 = new Feedback(List.of(Mark.CORRECT,Mark.CORRECT, Mark.CORRECT,Mark.PRESENT));
 
+        assertNotEquals(feedback1, feedback2);
+    }
+
+    @Test
+    @DisplayName("feedback the same, when value are the same")
+    void feedbackSame() {
+        Feedback feedback1 = new Feedback(List.of(Mark.CORRECT,Mark.CORRECT));
+        Feedback feedback2 = new Feedback(List.of(Mark.CORRECT,Mark.CORRECT));
+
+        assertEquals(feedback1, feedback2);
+    }
+
+    @Test
+    @DisplayName("hashcode values the same")
+    void hashCodeGenerator(){
+        Feedback feedback1 = new Feedback(List.of(Mark.CORRECT,Mark.CORRECT));
+        Feedback feedback2 = new Feedback(List.of(Mark.CORRECT,Mark.CORRECT));
+
+        assertEquals(feedback1, feedback2);
+    }
+
+    @Test
+    @DisplayName("contains class name")
+    void convertedToString(){
+        Feedback feedback1 = new Feedback(List.of(Mark.CORRECT,Mark.CORRECT));
+
+        assertTrue(feedback1.toString().contains("Feedback"));
+    }
 }
