@@ -12,6 +12,14 @@ public class Feedback {
         this.mark = feedback;
     }
 
+    public static boolean correct(String woord) {
+        return true;
+    }
+
+    public static boolean invalid(String woord) {
+        return false;
+    }
+
     public boolean isWordGuessed(){
         //.stream() maakt van een collectie (een verzameling elementen) een stream (een reeks elementen waar je over tijd bewerkingen op kunt doen)
         // .allMatch geeft een boolean terug op basis van de meegegeven functie

@@ -90,6 +90,20 @@ class FeedbackTest {
         assertTrue(feedback1.toString().contains("Feedback"));
     }
 
+
+    @Test
+    @DisplayName("word is not guessed, not all letters are correct")
+    void wordIsGuessedWithNamedStaticConstructors() {
+        assertTrue(Feedback.correct("woord"));
+    }
+
+    @Test
+    @DisplayName("word guessed is invalid, because all letters are invalid")
+    void guessIsInvalidWithNamedStaticConstructors() {
+        assertTrue(Feedback.invalid("woord"));
+    }
+
+
 //    @Test
 //    @DisplayName("")
 //    void a(){
