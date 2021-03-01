@@ -95,24 +95,6 @@ class FeedbackTest {
     }
 
 
-    @Test
-    @DisplayName("word is not guessed, not all letters are correct")
-    void wordIsGuessedWithNamedStaticConstructors() {
-        assertTrue(Feedback.correct("woord"));
-    }
-
-    @Test
-    @DisplayName("word guessed is invalid, because all letters are invalid")
-    void guessIsInvalidWithNamedStaticConstructors() {
-        assertFalse(Feedback.invalid("woord"));
-    }
-
-    @ParameterizedTest
-    @DisplayName("give hint")
-    @MethodSource("provideHintExamples")
-    void getHint(){
-    }
-
 //    static Stream<Arguments> provideHintExamples(){
 //        return Stream.of(
 //                Arguments.of(A,B,C),
@@ -120,9 +102,23 @@ class FeedbackTest {
 //        );
 //    }
 
+
 //    @Test
-//    @DisplayName("")
-//    void a(){
-//        assertThrows(InvalidFeedbackException.class, () -> new Feedback("woord",List.of(Mark.CORRECT));
+//    @DisplayName("word is not guessed, not all letters are correct")
+//    void wordIsGuessedWithNamedStaticConstructors() {
+//        assertTrue(Feedback.correct("woord"));
 //    }
+//
+//    @Test
+//    @DisplayName("word guessed is invalid, because all letters are invalid")
+//    void guessIsInvalidWithNamedStaticConstructors() {
+//        assertFalse(Feedback.invalid("woord"));
+//    }
+//
+//    @ParameterizedTest
+//    @DisplayName("give hint")
+//    @MethodSource("provideHintExamples")
+//    void getHint(){
+//    }
+//
 }
