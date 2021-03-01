@@ -34,6 +34,10 @@ public class Feedback {
                 .allMatch(Mark.INVALID::equals);
     }
 
+    public List<String> giveHint(List<String> hint, String wordToGuess){
+        return hint;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
