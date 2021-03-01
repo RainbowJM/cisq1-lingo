@@ -104,7 +104,7 @@ class FeedbackTest {
     @Test
     @DisplayName("word guessed is invalid, because all letters are invalid")
     void guessIsInvalidWithNamedStaticConstructors() {
-        assertTrue(Feedback.invalid("woord"));
+        assertFalse(Feedback.invalid("woord"));
     }
 
     @ParameterizedTest
