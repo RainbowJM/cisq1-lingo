@@ -1,15 +1,16 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.words.domain.Mark;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Feedback {
     private List<Mark> mark;
+    private String attempt;
 
-    public Feedback(List<Mark> feedback) {
+    public Feedback(List<Mark> feedback, String attempt) {
         this.mark = feedback;
+        this.attempt = attempt;
     }
 
     public static boolean correct(String woord) {
@@ -20,7 +21,7 @@ public class Feedback {
         return false;
     }
 
-    public boolean isWordGuessed(){
+    public boolean isWordGuessed() {
         //.stream() maakt van een collectie (een verzameling elementen) een stream (een reeks elementen waar je over tijd bewerkingen op kunt doen)
         // .allMatch geeft een boolean terug op basis van de meegegeven functie
         //Mark.CORRECT::equals kan je herschrijven als: mark -> Mark.CORRECT.equals(mark)
@@ -34,8 +35,26 @@ public class Feedback {
                 .allMatch(Mark.INVALID::equals);
     }
 
-    public List<String> giveHint(List<String> hint, String wordToGuess){
-        return hint;
+    public String giveHint(String previousHint) {
+        String[] letters = this.attempt.split("");
+        List<String> hint = new ArrayList<>();
+
+        for (int i = 0; i < letters.length; i++) {
+            String letter = letters[i];
+            char prevHintLetter = previousHint.charAt(i);
+
+            // attempt: S O O R T
+            // marks: C A P A C
+            // prev: S P . . .
+            // next: S P . . T
+
+            if (mark.get(i) == Mark.CORRECT) {
+                hint.add(letter);
+            } else {
+                hint.add(String.valueOf(prevHintLetter));
+            }
+        }
+        return String.join("", hint);
     }
 
     @Override
