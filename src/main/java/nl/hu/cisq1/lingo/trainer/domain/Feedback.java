@@ -51,7 +51,7 @@ public class Feedback {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) return false;
         if (o == null || getClass() != o.getClass()) return false;
         Feedback feedback = (Feedback) o;
         return mark.equals(feedback.mark) && attempt.equals(feedback.attempt);
