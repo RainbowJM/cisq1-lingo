@@ -54,12 +54,12 @@ public class Feedback {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Feedback feedback = (Feedback) o;
-        return Objects.equals(mark, feedback.mark);
+        return mark.equals(feedback.mark) && attempt.equals(feedback.attempt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mark);
+        return Objects.hash(mark, attempt);
     }
 
     @Override
