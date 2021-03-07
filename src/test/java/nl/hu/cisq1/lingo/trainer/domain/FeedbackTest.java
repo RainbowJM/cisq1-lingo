@@ -20,7 +20,7 @@ class FeedbackTest {
         //when
         Feedback feedback = new Feedback(
                 List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT),
-                "apple");
+                "APPLE");
         //then
         assertTrue(feedback.isWordGuessed());
     }
@@ -32,7 +32,7 @@ class FeedbackTest {
         //when
         Feedback feedback = new Feedback(
                 List.of(Mark.CORRECT, Mark.CORRECT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT),
-                "adopt");
+                "ADOPT");
         //then
         assertFalse(feedback.isWordGuessed());
     }
@@ -44,7 +44,7 @@ class FeedbackTest {
         //when
         Feedback feedback = new Feedback(
                 List.of(Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID),
-                "appsa");
+                "BPPLE");
         //then
         assertTrue(feedback.isWordInvalid());
     }
@@ -56,7 +56,7 @@ class FeedbackTest {
         //when
         Feedback feedback = new Feedback(
                 List.of(Mark.INVALID, Mark.CORRECT, Mark.ABSENT, Mark.CORRECT, Mark.PRESENT),
-                "appls");
+                "BPPLE");
         //then
         assertFalse(feedback.isWordInvalid());
     }
@@ -64,8 +64,12 @@ class FeedbackTest {
     @Test
     @DisplayName("feedback different, when value is different")
     void feedbackDifferent() {
-        Feedback feedback1 = new Feedback(List.of(Mark.ABSENT, Mark.CORRECT, Mark.CORRECT, Mark.PRESENT), "dpple");
-        Feedback feedback2 = new Feedback(List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT), "apple");
+        Feedback feedback1 = new Feedback(
+                List.of(Mark.ABSENT, Mark.CORRECT, Mark.CORRECT, Mark.PRESENT, Mark.CORRECT),
+                "BPPLE");
+        Feedback feedback2 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
 
         assertNotEquals(feedback1, feedback2);
     }
@@ -73,8 +77,12 @@ class FeedbackTest {
     @Test
     @DisplayName("feedback the same, when value are the same")
     void feedbackSame() {
-        Feedback feedback1 = new Feedback(List.of(Mark.CORRECT, Mark.CORRECT), "apple");
-        Feedback feedback2 = new Feedback(List.of(Mark.CORRECT, Mark.CORRECT), "apple");
+        Feedback feedback1 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
+        Feedback feedback2 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
 
         assertEquals(feedback1, feedback2);
     }
@@ -82,8 +90,12 @@ class FeedbackTest {
     @Test
     @DisplayName("hashcode values the same")
     void hashCodeGenerator() {
-        Feedback feedback1 = new Feedback(List.of(Mark.CORRECT, Mark.CORRECT), "apple");
-        Feedback feedback2 = new Feedback(List.of(Mark.CORRECT, Mark.CORRECT), "apple");
+        Feedback feedback1 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
+        Feedback feedback2 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
 
         assertEquals(feedback1, feedback2);
     }
@@ -91,7 +103,9 @@ class FeedbackTest {
     @Test
     @DisplayName("contains class name")
     void convertedToString() {
-        Feedback feedback1 = new Feedback(List.of(Mark.CORRECT, Mark.CORRECT), "apple");
+        Feedback feedback1 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
 
         assertTrue(feedback1.toString().contains("Feedback"));
     }
@@ -117,7 +131,7 @@ class FeedbackTest {
     @ParameterizedTest
     @DisplayName("give hint based on attempt")
     @MethodSource("provideHintExamples")
-    void getHint(String attempt,String previousHint, String expectedHint) {
+    void getHint(String attempt, String previousHint, String expectedHint) {
         // given
 //        String attempt = "SOORT";
         List<Mark> markList = List.of(Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.CORRECT);
