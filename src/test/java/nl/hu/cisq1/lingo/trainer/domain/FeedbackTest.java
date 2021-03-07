@@ -97,9 +97,21 @@ class FeedbackTest {
                 List.of(Mark.CORRECT, Mark.CORRECT),
                 "APPLE");
 
-        assertEquals(feedback1, feedback2);
+        assertEquals(feedback1.hashCode(), feedback2.hashCode());
     }
 
+    @Test
+    @DisplayName("hashcode values the not same")
+    void hashCodeGeneratorNotTheSame() {
+        Feedback feedback1 = new Feedback(
+                List.of(Mark.CORRECT, Mark.PRESENT),
+                "APPLE");
+        Feedback feedback2 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
+
+        assertNotEquals(feedback1.hashCode(), feedback2.hashCode());
+    }
     @Test
     @DisplayName("contains class name")
     void convertedToString() {
