@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Feedback {
-    private List<Mark> mark;
-    private String attempt;
+    private final List<Mark> mark;
+    private final String attempt;
 
     public Feedback(List<Mark> feedback, String attempt) {
         this.mark = feedback;
@@ -51,10 +51,10 @@ public class Feedback {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return false;
-        if (o == null || getClass() != o.getClass()) return true;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Feedback feedback = (Feedback) o;
-        return mark.equals(feedback.mark) && attempt.equals(feedback.attempt);
+        return Objects.equals(mark, feedback.mark) && Objects.equals(attempt, feedback.attempt);
     }
 
     @Override
