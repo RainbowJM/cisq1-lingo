@@ -7,7 +7,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RoundTest {
 
-//    @Test
-//    @DisplayName("")
-//    void
+    @Test
+    @DisplayName("generate feedback based on attempt")
+    void generateFeedback(){
+        // given
+        String attempt = "SOORT";
+        String wordToGuess = "SPORT";
+
+        // when
+
+        // then
+    }
 }
