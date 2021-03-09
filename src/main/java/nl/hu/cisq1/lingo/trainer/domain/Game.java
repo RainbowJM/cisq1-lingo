@@ -1,24 +1,12 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import nl.hu.cisq1.lingo.trainer.domain.Attempt;
+import java.io.Serializable;
 
-public class Game {
-    private Attempt attempt;
-    private long score;
+public class Game implements Serializable {
+    private Long score;
+    private GameStatus status = GameStatus.START;
 
-//    public Long calculateScore(){
-//        switch (attempt){
-//
-//            case ONE:
-//                break;
-//            case TWO:
-//                break;
-//            case THREE:
-//                break;
-//            case FOUR:
-//                break;
-//            case FIVE:
-//                break;
-//        }
-//    }
+    public Game(Long score) {
+        this.score = score;
+    }
 }
