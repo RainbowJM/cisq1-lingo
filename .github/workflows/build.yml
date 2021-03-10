@@ -1,4 +1,4 @@
-name: when-push
+name: commit-check
 
 on: [ push ]
 
