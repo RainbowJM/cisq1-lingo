@@ -89,7 +89,7 @@ class FeedbackTest {
 
     @Test
     @DisplayName("hashcode values the same")
-    void hashCodeGenerator() {
+    void hashCodeGeneratorSame() {
         Feedback feedback1 = new Feedback(
                 List.of(Mark.CORRECT, Mark.CORRECT),
                 "APPLE");
@@ -101,7 +101,7 @@ class FeedbackTest {
     }
 
     @Test
-    @DisplayName("hashcode values the not same")
+    @DisplayName("hashcode values not same")
     void hashCodeGeneratorNotTheSame() {
         Feedback feedback1 = new Feedback(
                 List.of(Mark.CORRECT, Mark.PRESENT),
