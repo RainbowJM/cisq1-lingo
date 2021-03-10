@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class Round {
-    private String wordToGuess;
+    private final String wordToGuess;
     private int attempt;
-    private List<Feedback> feedbacks = new ArrayList<>();
+    private final List<Feedback> feedbacks;
+    private List<Mark> mark = new ArrayList<>();
+
 
     public Round(String wordToGuess, int attempt, List<Feedback> feedbacks) {
         this.wordToGuess = wordToGuess;
@@ -19,22 +21,30 @@ public class Round {
         int maxAttempt = 5;
 
         if (getAttempt() <= maxAttempt) {
-            String[] lettersWordToGuess = this.wordToGuess.split("");
-            String[] lettersAttemptWord = attemptWord.split("");
-            List<Mark> mark = new ArrayList<>();
-
-            for (int i = 0; i < lettersWordToGuess.length; i++) {
-                String letterWordToGuess = lettersWordToGuess[i];
-                String letterAttemptWord = lettersAttemptWord[i];
-
-                if (letterAttemptWord.equals(letterWordToGuess)) {
-                    Mark markOfLetter = Mark.CORRECT;
-                    mark.add(markOfLetter);
-                }
-            }
+            mark = giveListMark(attemptWord);
             Feedback feedbackList = new Feedback(mark, attemptWord);
             feedbacks.add(feedbackList);
         }
+        attempt++;
+    }
+
+    public List<Mark> giveListMark(String attemptWord) {
+        String[] lettersWordToGuess = this.wordToGuess.split("");
+        String[] lettersAttemptWord = attemptWord.split("");
+        Mark markOfLetter;
+
+        for (int i = 0; i < lettersWordToGuess.length; i++) {
+            String letterWordToGuess = lettersWordToGuess[i];
+            String letterAttemptWord = lettersAttemptWord[i];
+
+            if (letterAttemptWord.equals(letterWordToGuess)) {
+                markOfLetter = Mark.CORRECT;
+                mark.add(markOfLetter);
+            } else {
+                markOfLetter = Mark.ABSENT;
+            }
+        }
+        return mark;
     }
 
     public String giveHint() {
@@ -65,14 +75,5 @@ public class Round {
     @Override
     public int hashCode() {
         return Objects.hash(wordToGuess, attempt, feedbacks);
-    }
-
-    @Override
-    public String toString() {
-        return "Round{" +
-                "wordToGuess='" + wordToGuess + '\'' +
-                ", attempt=" + attempt +
-                ", feedbacks=" + feedbacks +
-                '}';
     }
 }
