@@ -49,6 +49,14 @@ public class Feedback {
         return String.join("", hint);
     }
 
+    public List<Mark> getMark() {
+        return mark;
+    }
+
+    public String getAttempt() {
+        return attempt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

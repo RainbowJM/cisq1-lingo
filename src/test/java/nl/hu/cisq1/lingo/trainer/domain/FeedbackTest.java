@@ -62,6 +62,24 @@ class FeedbackTest {
     }
 
     @Test
+    @DisplayName("get marks from a feedback")
+    void getMark(){
+        List<Mark> marks = List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT);
+        Feedback feedback = new Feedback(marks, "APPLE");
+
+        assertEquals(List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT), feedback.getMark());
+    }
+
+    @Test
+    @DisplayName("get attempt from feedback")
+    void getAttempt(){
+        List<Mark> marks = List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT);
+        Feedback feedback = new Feedback(marks, "APPLE");
+
+        assertEquals("APPLE",feedback.getAttempt());
+    }
+
+    @Test
     @DisplayName("feedback different, when value is different")
     void feedbackDifferent() {
         Feedback feedback1 = new Feedback(
@@ -121,7 +139,7 @@ class FeedbackTest {
 
         assertTrue(feedback1.toString().contains("Feedback"));
     }
-//
+
 //    @Test
 //    @DisplayName("give hint based on attempt")
 //    @MethodSource("provideHintExamples")
