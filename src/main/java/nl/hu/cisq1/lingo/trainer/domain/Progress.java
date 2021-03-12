@@ -2,9 +2,9 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 public class Progress {
     private Long id;
-    private Long score;
-    private String hints;
-    private int roundNumber;
+    private final Long score;
+    private final String hints;
+    private final int roundNumber;
 
     public Progress(Long id, Long score, String hints, int roundNumber) {
         this.id = id;
