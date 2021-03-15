@@ -35,6 +35,19 @@ class RoundTest {
     }
 
     @Test
+    @DisplayName("get list of feedback")
+    void getFeedback(){
+        String word = "APPLE";
+        List<Mark> markList = List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.PRESENT, Mark.CORRECT);
+        Feedback feedback = new Feedback(markList, word);
+        List<Feedback> feedbacks = new ArrayList<>();
+        feedbacks.add(feedback);
+        Round round = new Round(word, 5, feedbacks);
+
+        assertEquals(feedbacks, round.getFeedbackHistory());
+    }
+
+    @Test
     @DisplayName("check the length of the word is 5")
     void checkLength() {
         String word = "APPLE";

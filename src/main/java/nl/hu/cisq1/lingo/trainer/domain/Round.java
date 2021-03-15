@@ -41,15 +41,41 @@ public class Round {
                 markOfLetter = Mark.CORRECT;
                 mark.add(markOfLetter);
             } else {
-                markOfLetter = Mark.ABSENT;
+                List<String> lettersNoMarks = new ArrayList<>();
+                lettersNoMarks.add(letterAttemptWord);
+                for (int j = 0; j < lettersNoMarks.size(); j++) {
+                    String letterNoMark = lettersNoMarks.get(j);
+                    int test = i++;
+                    if (letterNoMark.equals(lettersWordToGuess[test])) {
+                        markOfLetter = Mark.PRESENT;
+                        mark.add(markOfLetter);
+                    } else {
+                        markOfLetter = Mark.ABSENT;
+                        mark.add(markOfLetter);
+                    }
+                }
             }
         }
         return mark;
     }
 
     public String giveHint() {
+        String hint = firstHint();
 
-        return null;
+        if (getAttempt() > 0) {
+            List<Feedback> historyFeedback = getFeedbackHistory();
+            Feedback lastFeedbackHistory = historyFeedback.get(historyFeedback.size() - 1);
+
+            List<String> hintList = lastFeedbackHistory.getHints();
+
+            hint = lastFeedbackHistory.giveHint(hintList.get(hintList.size() - 1));
+        }
+        return hint;
+    }
+
+    public String firstHint() {
+        String[] letters = wordToGuess.split("");
+        return letters[0] + ".".repeat(currentWordLength() - 1);
     }
 
     public int getAttempt() {
