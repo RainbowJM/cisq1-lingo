@@ -7,14 +7,12 @@ import java.util.Objects;
 public class Round {
     private final String wordToGuess;
     private int attempt;
-    private final List<Feedback> feedbacks;
+    private final List<Feedback> feedbacks = new ArrayList<>();
     private List<Mark> mark = new ArrayList<>();
 
 
-    public Round(String wordToGuess, int attempt, List<Feedback> feedbacks) {
+    public Round(String wordToGuess) {
         this.wordToGuess = wordToGuess;
-        this.attempt = attempt;
-        this.feedbacks = feedbacks;
     }
 
     public void guess(String attemptWord) {

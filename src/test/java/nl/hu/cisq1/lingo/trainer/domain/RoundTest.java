@@ -29,7 +29,7 @@ class RoundTest {
         Feedback feedback = new Feedback(markList, word);
         List<Feedback> feedbacks = new ArrayList<>();
         feedbacks.add(feedback);
-        Round round = new Round(word, 5, feedbacks);
+        Round round = new Round(word);
 
         assertEquals(round.getAttempt(), 5);
     }
@@ -42,7 +42,7 @@ class RoundTest {
         Feedback feedback = new Feedback(markList, word);
         List<Feedback> feedbacks = new ArrayList<>();
         feedbacks.add(feedback);
-        Round round = new Round(word, 5, feedbacks);
+        Round round = new Round(word);
 
         assertEquals(feedbacks, round.getFeedbackHistory());
     }
@@ -55,13 +55,13 @@ class RoundTest {
         Feedback feedback = new Feedback(markList, word);
         List<Feedback> feedbacks = new ArrayList<>();
         feedbacks.add(feedback);
-        Round round = new Round(word, 5, feedbacks);
+        Round round = new Round(word);
 
         assertEquals(5, round.currentWordLength());
     }
 
     @Test
-    @DisplayName("feedback different, when value is different")
+    @DisplayName("round different, when value is different")
     void roundDifferent() {
         // round 1
         String word1 = "SOORT";
@@ -71,7 +71,7 @@ class RoundTest {
         List<Feedback> feedbacks1 = new ArrayList<>();
         feedbacks1.add(feedback1);
 
-        Round round1 = new Round("SPORT", 1, feedbacks1);
+        Round round1 = new Round("SPORT");
 
         // round2
         String word2 = "SPORT";
@@ -81,7 +81,7 @@ class RoundTest {
         List<Feedback> feedbacks2 = new ArrayList<>();
         feedbacks2.add(feedback2);
 
-        Round round2 = new Round("SPORT", 1, feedbacks2);
+        Round round2 = new Round("SPORT");
 
 
         assertNotEquals(round1, round2);
@@ -98,7 +98,7 @@ class RoundTest {
         List<Feedback> feedbacks1 = new ArrayList<>();
         feedbacks1.add(feedback1);
 
-        Round round1 = new Round("SPORT", 1, feedbacks1);
+        Round round1 = new Round("SPORT");
 
         // round2
         String word2 = "SOORT";
@@ -108,7 +108,7 @@ class RoundTest {
         List<Feedback> feedbacks2 = new ArrayList<>();
         feedbacks2.add(feedback2);
 
-        Round round2 = new Round("SPORT", 1, feedbacks2);
+        Round round2 = new Round("SPORT");
 
 
         assertEquals(round1, round2);
@@ -125,7 +125,7 @@ class RoundTest {
         List<Feedback> feedbacks1 = new ArrayList<>();
         feedbacks1.add(feedback1);
 
-        Round round1 = new Round("SPORT", 1, feedbacks1);
+        Round round1 = new Round("SPORT");
 
         // round2
         String word2 = "SPORT";
@@ -135,7 +135,7 @@ class RoundTest {
         List<Feedback> feedbacks2 = new ArrayList<>();
         feedbacks2.add(feedback2);
 
-        Round round2 = new Round("SPORT", 1, feedbacks2);
+        Round round2 = new Round("SPORT");
 
 
         assertNotEquals(round1.hashCode(), round2.hashCode());
@@ -152,7 +152,7 @@ class RoundTest {
         List<Feedback> feedbacks1 = new ArrayList<>();
         feedbacks1.add(feedback1);
 
-        Round round1 = new Round("SPORT", 1, feedbacks1);
+        Round round1 = new Round("SPORT");
 
         // round2
         String word2 = "SOORT";
@@ -162,7 +162,7 @@ class RoundTest {
         List<Feedback> feedbacks2 = new ArrayList<>();
         feedbacks2.add(feedback2);
 
-        Round round2 = new Round("SPORT", 1, feedbacks2);
+        Round round2 = new Round("SPORT");
 
 
         assertEquals(round1.hashCode(), round2.hashCode());
