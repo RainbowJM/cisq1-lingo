@@ -130,6 +130,7 @@ class FeedbackTest {
 
         assertNotEquals(feedback1.hashCode(), feedback2.hashCode());
     }
+
     @Test
     @DisplayName("contains class name")
     void convertedToString() {
@@ -140,23 +141,6 @@ class FeedbackTest {
         assertTrue(feedback1.toString().contains("Feedback"));
     }
 
-//    @Test
-//    @DisplayName("give hint based on attempt")
-//    @MethodSource("provideHintExamples")
-//    void getHint() {
-//        // given
-//        String attempt = "SOORT";
-//        List<Mark> markList = List.of(Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.CORRECT);
-//        Feedback feedback = new Feedback(markList, attempt);
-//        String previousHint = "SP...";
-//
-//        // when
-//        String hint = feedback.giveHint(previousHint);
-//
-//        // then
-//        String expectedHint = "SP..T";
-//        assertEquals(expectedHint, hint);
-//    }
 
     @ParameterizedTest
     @DisplayName("give hint based on attempt")

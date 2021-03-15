@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Feedback {
     private final List<Mark> mark;
     private final String attempt;
+    private List<String> hints = new ArrayList<>();
 
     public Feedback(List<Mark> feedback, String attempt) {
         this.mark = feedback;
@@ -30,6 +31,7 @@ public class Feedback {
     public String giveHint(String previousHint) {
         String[] letters = this.attempt.split("");
         List<String> hint = new ArrayList<>();
+        String newHint;
 
         for (int i = 0; i < letters.length; i++) {
             String letter = letters[i];
@@ -46,7 +48,10 @@ public class Feedback {
                 hint.add(String.valueOf(prevHintLetter));
             }
         }
-        return String.join("", hint);
+        newHint = String.join("", hint);
+        hints.add(newHint);
+
+        return newHint;
     }
 
     public List<Mark> getMark() {
@@ -55,6 +60,10 @@ public class Feedback {
 
     public String getAttempt() {
         return attempt;
+    }
+
+    public List<String> getHints() {
+        return hints;
     }
 
     @Override
@@ -72,8 +81,8 @@ public class Feedback {
 
     @Override
     public String toString() {
-        return "Feedback{" +
-                "mark=" + mark +
-                '}';
+        return "Feedback:" +
+                "mark=" + mark + ", " +
+                "attempt=" + attempt;
     }
 }
