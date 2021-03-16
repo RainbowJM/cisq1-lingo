@@ -1,10 +1,11 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Feedback {
+public class Feedback implements Serializable {
     private final List<Mark> mark;
     private final String attempt;
     private List<String> hints = new ArrayList<>();

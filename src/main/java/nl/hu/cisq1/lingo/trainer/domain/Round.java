@@ -1,10 +1,11 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Round {
+public class Round implements Serializable {
     private final String wordToGuess;
     private int attempt;
     private final List<Feedback> feedbacks = new ArrayList<>();
