@@ -3,15 +3,15 @@ package nl.hu.cisq1.lingo.trainer.domain;
 public class Progress {
     private Long id;
     private final GameStatus status;
+    private final Feedback feedback;
     private final Long score;
-    private final String hints;
-    private final int roundNumber;
+    private final String hint;
 
-    public Progress(GameStatus status, Long score, String hints, int roundNumber) {
+    public Progress(GameStatus status, Feedback feedback, Long score, String hint) {
         this.status = status;
+        this.feedback = feedback;
         this.score = score;
-        this.hints = hints;
-        this.roundNumber = roundNumber;
+        this.hint = hint;
     }
 
     public void setId(Long id) {
@@ -26,15 +26,16 @@ public class Progress {
         return status;
     }
 
+    public Feedback getFeedback() {
+        return feedback;
+    }
+
     public Long getScore() {
         return score;
     }
 
-    public String getHints() {
-        return hints;
+    public String getHint() {
+        return hint;
     }
 
-    public int getRoundNumber() {
-        return roundNumber;
-    }
 }
