@@ -25,14 +25,24 @@ public class Game implements Serializable {
     }
 
     public void guess(String word) {
-        Round round = rounds.get(rounds.size()-1);
+        status = GameStatus.PLAYING;
+
+        Round round = rounds.get(rounds.size() - 1);
         round.guess(word);
         calculateScore();
+        showProgress();
     }
 
-    public Progress showProgess() {
+    public Progress showProgress() {
+        Round round = rounds.get(rounds.size() - 1);
+        Feedback feedback = round.getFeedbackHistory().get(round.getFeedbackHistory().size() - 1);
 
-        return null;
+        List<String> hintList = feedback.getHints();
+
+        String hint = feedback.giveHint(hintList.get(hintList.size() - 1));
+
+
+        return new Progress(getStatus(), feedback, score, hint);
     }
 
     public boolean isPlayerEliminated() {
@@ -65,5 +75,9 @@ public class Game implements Serializable {
 
     public GameStatus getStatus() {
         return status;
+    }
+
+    public List<Round> getRounds() {
+        return rounds;
     }
 }
