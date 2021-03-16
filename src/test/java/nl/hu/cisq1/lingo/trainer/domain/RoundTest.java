@@ -10,41 +10,34 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RoundTest {
 
-//    @Test
-//    @DisplayName("generate feedback based on attempt")
-//    void generateFeedback(){
-//        // given
-//        String attempt = "SOORT";
-//        String wordToGuess = "SPORT";
-//
-//        // when
-//
-//        // then
-//    }
+    @Test
+    @DisplayName("Give first hint based on word to guess")
+    void giveFirstHint(){
+        Round round = new Round("APPLE");
+
+        assertEquals("A....",round.firstHint());
+    }
+
     @Test
     @DisplayName("check attempt of round")
     void checkAttempt(){
-        String word = "APPLE";
-        List<Mark> markList = List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.PRESENT, Mark.CORRECT);
-        Feedback feedback = new Feedback(markList, word);
-        List<Feedback> feedbacks = new ArrayList<>();
-        feedbacks.add(feedback);
-        Round round = new Round(word);
+        String wordToGuess = "APPLE";
+        String wordAttempt = "ADOPT";
+        Round round = new Round(wordToGuess);
+        round.guess(wordAttempt);
 
-        assertEquals(round.getAttempt(), 5);
+        assertEquals(round.getAttempt(), 1);
     }
 
     @Test
     @DisplayName("get list of feedback")
     void getFeedback(){
-        String word = "APPLE";
-        List<Mark> markList = List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.PRESENT, Mark.CORRECT);
-        Feedback feedback = new Feedback(markList, word);
-        List<Feedback> feedbacks = new ArrayList<>();
-        feedbacks.add(feedback);
-        Round round = new Round(word);
+        String wordToGuess = "APPLE";
+        String wordAttempt = "ADOPT";
+        Round round = new Round(wordToGuess);
+        round.guess(wordAttempt);
 
-        assertEquals(feedbacks, round.getFeedbackHistory());
+        assertEquals(new Feedback(round.giveListMark(wordAttempt),wordAttempt), round.getFeedbackHistory().get(0));
     }
 
     @Test
@@ -64,24 +57,12 @@ class RoundTest {
     @DisplayName("round different, when value is different")
     void roundDifferent() {
         // round 1
-        String word1 = "SOORT";
-        List<Mark> markList1 = List.of(Mark.CORRECT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT);
-
-        Feedback feedback1 = new Feedback(markList1, word1);
-        List<Feedback> feedbacks1 = new ArrayList<>();
-        feedbacks1.add(feedback1);
-
         Round round1 = new Round("SPORT");
+        round1.guess("SPORT");
 
         // round2
-        String word2 = "SPORT";
-        List<Mark> markList2 = List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT);
-
-        Feedback feedback2 = new Feedback(markList2, word2);
-        List<Feedback> feedbacks2 = new ArrayList<>();
-        feedbacks2.add(feedback2);
-
         Round round2 = new Round("SPORT");
+        round2.guess("SOORT");
 
 
         assertNotEquals(round1, round2);
@@ -118,25 +99,12 @@ class RoundTest {
     @DisplayName("hashcode from round class's values not same")
     void hashCodeGeneratorNotTheSameRound() {
         // round 1
-        String word1 = "SOORT";
-        List<Mark> markList1 = List.of(Mark.CORRECT, Mark.ABSENT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT);
-
-        Feedback feedback1 = new Feedback(markList1, word1);
-        List<Feedback> feedbacks1 = new ArrayList<>();
-        feedbacks1.add(feedback1);
-
         Round round1 = new Round("SPORT");
+        round1.guess("SPORT");
 
         // round2
-        String word2 = "SPORT";
-        List<Mark> markList2 = List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT);
-
-        Feedback feedback2 = new Feedback(markList2, word2);
-        List<Feedback> feedbacks2 = new ArrayList<>();
-        feedbacks2.add(feedback2);
-
         Round round2 = new Round("SPORT");
-
+        round2.guess("SOORT");
 
         assertNotEquals(round1.hashCode(), round2.hashCode());
     }

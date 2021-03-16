@@ -60,7 +60,7 @@ public class Round {
     public String giveHint() {
         String hint = firstHint();
 
-        if (getAttempt() > 0) {
+        if (getAttempt() > 0 && getAttempt() <= 5) {
             List<Feedback> historyFeedback = getFeedbackHistory();
             Feedback lastFeedbackHistory = historyFeedback.get(historyFeedback.size() - 1);
 
