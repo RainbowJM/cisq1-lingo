@@ -4,10 +4,10 @@ public class Progress {
     private Long id;
     private final GameStatus status;
     private final Feedback feedback;
-    private final Long score;
+    private final int score;
     private final String hint;
 
-    public Progress(GameStatus status, Feedback feedback, Long score, String hint) {
+    public Progress(GameStatus status, Feedback feedback, int score, String hint) {
         this.status = status;
         this.feedback = feedback;
         this.score = score;
@@ -30,7 +30,7 @@ public class Progress {
         return feedback;
     }
 
-    public Long getScore() {
+    public int getScore() {
         return score;
     }
 
