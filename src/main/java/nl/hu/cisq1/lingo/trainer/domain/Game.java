@@ -1,18 +1,31 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import java.io.Serializable;
+import org.hibernate.annotations.Cascade;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game implements Serializable {
-    private Long score;
+@Entity
+@Table(name = "game")
+public class Game {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private int score = 0;
+
+    @OneToMany(cascade = CascadeType.ALL)
     private final List<Round> rounds = new ArrayList<>();
-    private final int wordLength;
+
+    private int wordLength = 5;
+
+    @Enumerated(EnumType.STRING)
     private GameStatus status;
 
+
     public Game() {
-        this.score = 0L;
-        this.wordLength = 5;
     }
 
     public void startNewRound(String wordToGuess) {
@@ -66,10 +79,10 @@ public class Game implements Serializable {
         return nextWordLength;
     }
 
-    public Long calculateScore() {
+    public int calculateScore() {
         Round round = rounds.get(rounds.size() - 1);
         int attempt = round.getAttempt();
-        score = 5 * (5 - (long) attempt) + 5;
+        score = 5 * (5 - attempt) + 5;
         return score;
     }
 

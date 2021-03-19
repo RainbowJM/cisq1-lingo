@@ -1,24 +1,36 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import java.io.Serializable;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Round implements Serializable {
-    private final String wordToGuess;
+@Entity
+@Table(name = "round")
+public class Round {
+    public static final int maxAttempt = 5;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private String wordToGuess;
     private int attempt;
+
+    @OneToMany
     private final List<Feedback> feedbacks = new ArrayList<>();
+
+    @ElementCollection
     private List<Mark> mark = new ArrayList<>();
 
+    public Round() {
+    }
 
     public Round(String wordToGuess) {
         this.wordToGuess = wordToGuess;
     }
 
     public void guess(String attemptWord) {
-        int maxAttempt = 5;
-
         if (getAttempt() <= maxAttempt) {
             mark = giveListMark(attemptWord);
             Feedback feedbackList = new Feedback(mark, attemptWord);

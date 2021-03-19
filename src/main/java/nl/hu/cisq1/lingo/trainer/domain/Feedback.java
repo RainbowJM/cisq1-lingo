@@ -1,14 +1,27 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import java.io.Serializable;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Feedback implements Serializable {
-    private final List<Mark> mark;
-    private final String attempt;
+@Entity
+@Table(name = "feedback")
+public class Feedback {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @ElementCollection
+    private List<Mark> mark;
+
+    private String attempt;
+
+    @Transient
     private List<String> hints = new ArrayList<>();
+
+    public Feedback() {
+    }
 
     public Feedback(List<Mark> feedback, String attempt) {
         this.mark = feedback;
