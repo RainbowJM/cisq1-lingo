@@ -1,21 +1,20 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import java.util.List;
+
 public class Progress {
-    private Long id;
+    private final Long id;
     private final GameStatus status;
-    private final Feedback feedback;
+    private final List<Feedback> feedback;
     private final int score;
     private final String hint;
 
-    public Progress(GameStatus status, Feedback feedback, int score, String hint) {
+    public Progress(Long id, GameStatus status, List<Feedback> feedback, int score, String hint) {
+        this.id = id;
         this.status = status;
         this.feedback = feedback;
         this.score = score;
         this.hint = hint;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getId() {
@@ -26,7 +25,7 @@ public class Progress {
         return status;
     }
 
-    public Feedback getFeedback() {
+    public List<Feedback> getFeedback() {
         return feedback;
     }
 

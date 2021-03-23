@@ -1,12 +1,14 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import javax.persistence.*;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "feedback")
 public class Feedback {
     @Id
     @GeneratedValue
@@ -16,9 +18,6 @@ public class Feedback {
     private List<Mark> mark;
 
     private String attempt;
-
-    @Transient
-    private List<String> hints = new ArrayList<>();
 
     public Feedback() {
     }
@@ -45,16 +44,10 @@ public class Feedback {
     public String giveHint(String previousHint) {
         String[] letters = this.attempt.split("");
         List<String> hint = new ArrayList<>();
-        String newHint;
 
         for (int i = 0; i < letters.length; i++) {
             String letter = letters[i];
             char prevHintLetter = previousHint.charAt(i);
-
-            // attempt: S O O R T
-            // marks: C A P A C
-            // prev: S P . . .
-            // next: S P . . T
 
             if (mark.get(i) == Mark.CORRECT) {
                 hint.add(letter);
@@ -62,10 +55,8 @@ public class Feedback {
                 hint.add(String.valueOf(prevHintLetter));
             }
         }
-        newHint = String.join("", hint);
-        hints.add(newHint);
 
-        return newHint;
+        return String.join("", hint);
     }
 
     public List<Mark> getMark() {
@@ -76,9 +67,6 @@ public class Feedback {
         return attempt;
     }
 
-    public List<String> getHints() {
-        return hints;
-    }
 
     @Override
     public boolean equals(Object o) {

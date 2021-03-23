@@ -1,14 +1,16 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAction;
+import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidWordLength;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "round")
 public class Round {
-    public static final int maxAttempt = 5;
+    public static final int MAX_ATTEMPT = 5;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,72 +18,78 @@ public class Round {
 
     private String wordToGuess;
     private int attempt;
+    private String hint;
 
     @OneToMany
     private final List<Feedback> feedbacks = new ArrayList<>();
 
-    @ElementCollection
-    private List<Mark> mark = new ArrayList<>();
+//    @ElementCollection
+//    private List<Mark> mark = new ArrayList<>();
 
     public Round() {
     }
 
     public Round(String wordToGuess) {
         this.wordToGuess = wordToGuess;
+        this.hint = firstHint();
     }
 
     public void guess(String attemptWord) {
-        if (getAttempt() <= maxAttempt) {
-            mark = giveListMark(attemptWord);
-            Feedback feedbackList = new Feedback(mark, attemptWord);
-            feedbacks.add(feedbackList);
+        this.attempt++;
+
+        if (attemptWord.length() != wordToGuess.length()) {
+            throw new InvalidWordLength();
         }
-        attempt++;
+
+        if (attempt > MAX_ATTEMPT) {
+            throw new InvalidAction("Player is eliminated");
+        }
+
+        List<Mark> marks = giveListMark(attemptWord);
+        Feedback feedback = new Feedback(marks, attemptWord);
+
+        this.feedbacks.add(feedback);
+        this.hint = feedback.giveHint(this.hint);
     }
 
-    public List<Mark> giveListMark(String attemptWord) {
+    private List<Mark> giveListMark(String attemptWord) {
         String[] lettersWordToGuess = this.wordToGuess.split("");
         String[] lettersAttemptWord = attemptWord.split("");
-        Mark markOfLetter;
+
+        List<Mark> marks = new ArrayList<>();
+        List<String> available = new ArrayList<>();
 
         for (int i = 0; i < lettersWordToGuess.length; i++) {
             String letterWordToGuess = lettersWordToGuess[i];
             String letterAttemptWord = lettersAttemptWord[i];
 
             if (letterAttemptWord.equals(letterWordToGuess)) {
-                markOfLetter = Mark.CORRECT;
-                mark.add(markOfLetter);
+                marks.add(Mark.CORRECT);
             } else {
-                List<String> lettersNoMarks = new ArrayList<>();
-                lettersNoMarks.add(letterAttemptWord);
-                for (int j = 0; j < lettersNoMarks.size(); j++) {
-                    String letterNoMark = lettersNoMarks.get(j);
-                    int test = i++;
-                    if (letterNoMark.equals(lettersWordToGuess[test])) {
-                        markOfLetter = Mark.PRESENT;
-                        mark.add(markOfLetter);
-                    } else {
-                        markOfLetter = Mark.ABSENT;
-                        mark.add(markOfLetter);
-                    }
-                }
+                marks.add(null);
+                available.add(letterWordToGuess);
             }
         }
-        return mark;
+
+        for (int j = 0; j < marks.size(); j++) {
+            if (marks.get(j) != null) {
+                continue;
+            }
+
+            String attemptLetter = lettersAttemptWord[j];
+            if (available.contains(attemptLetter)) {
+                marks.set(j, Mark.PRESENT);
+                available.remove(attemptLetter);
+            } else {
+                marks.set(j, Mark.ABSENT);
+            }
+        }
+
+        return marks;
     }
 
-    public String giveHint() {
-        String hint = firstHint();
-
-        if (getAttempt() > 0 && getAttempt() <= 5) {
-            List<Feedback> historyFeedback = getFeedbackHistory();
-            Feedback lastFeedbackHistory = historyFeedback.get(historyFeedback.size() - 1);
-
-            List<String> hintList = lastFeedbackHistory.getHints();
-
-            hint = lastFeedbackHistory.giveHint(hintList.get(hintList.size() - 1));
-        }
-        return hint;
+    public Feedback getLastFeedback() {
+        return this.feedbacks.get(feedbacks.size() - 1);
     }
 
     public String firstHint() {
@@ -112,5 +120,13 @@ public class Round {
     @Override
     public int hashCode() {
         return Objects.hash(wordToGuess, attempt, feedbacks);
+    }
+
+    public String getHint() {
+        return this.hint;
+    }
+
+    public int calculateScore() {
+        return 5 * (5 - attempt) + 5;
     }
 }

@@ -1,15 +1,13 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import org.hibernate.annotations.Cascade;
+import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "game")
 public class Game {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -19,45 +17,55 @@ public class Game {
     @OneToMany(cascade = CascadeType.ALL)
     private final List<Round> rounds = new ArrayList<>();
 
-    private int wordLength = 5;
-
     @Enumerated(EnumType.STRING)
-    private GameStatus status;
-
+    private GameStatus status = GameStatus.START;
 
     public Game() {
     }
 
     public void startNewRound(String wordToGuess) {
-        status = GameStatus.START;
+        status = GameStatus.PLAYING;
+
+        if (!rounds.isEmpty()) {
+            this.score += this.getLastRound().calculateScore();
+        }
 
         Round newRound = new Round(wordToGuess);
-        newRound.giveHint();
         rounds.add(newRound);
-        provideNewWordLength();
     }
 
     public void guess(String word) {
-        status = GameStatus.PLAYING;
+        if (status != GameStatus.PLAYING) {
+            throw new InvalidAction("Player is not playing: " + status.toString());
+        }
 
-        Round round = rounds.get(rounds.size() - 1);
+        Round round = this.getLastRound();
         round.guess(word);
-        if (round.getAttempt() > 5){
+
+        if (round.getAttempt() > 5) {
             status = GameStatus.ELIMINATED;
         }
-        calculateScore();
-        showProgress();
+    }
+
+    public boolean isWordGuessed() {
+        // Use for automatically starting new round
+        return false;
     }
 
     public Progress showProgress() {
-        Round round = rounds.get(rounds.size() - 1);
-        Feedback feedback = round.getFeedbackHistory().get(round.getFeedbackHistory().size() - 1);
+        Round lastRound = this.getLastRound();
 
-        List<String> hintList = feedback.getHints();
-//error at this line
-        String hint = feedback.giveHint(hintList.get(hintList.size() - 1));
+        return new Progress(
+                this.id,
+                this.status,
+                lastRound.getFeedbackHistory(),
+                score + lastRound.calculateScore(),
+                lastRound.getHint()
+        );
+    }
 
-        return new Progress(getStatus(), feedback, score, hint);
+    private Round getLastRound() {
+        return rounds.get(rounds.size() - 1);
     }
 
     public boolean isPlayerEliminated() {
@@ -69,23 +77,13 @@ public class Game {
     }
 
     public int provideNewWordLength() {
-        int nextWordLength = rounds.get(rounds.size() - 1).currentWordLength();
+        int currentLength = rounds.get(rounds.size() - 1).currentWordLength();
 
-        if (wordLength == 5) {
-            nextWordLength = 6;
-        } else if (wordLength == 6) {
-            nextWordLength = 7;
-        } else if (wordLength == 7) {
-            nextWordLength = 5;
+        if (currentLength > 6) {
+            return 5;
         }
-        return nextWordLength;
-    }
 
-    public int calculateScore() {
-        Round round = rounds.get(rounds.size() - 1);
-        int attempt = round.getAttempt();
-        score = 5 * (5 - attempt) + 5;
-        return score;
+        return currentLength + 1;
     }
 
     public GameStatus getStatus() {
