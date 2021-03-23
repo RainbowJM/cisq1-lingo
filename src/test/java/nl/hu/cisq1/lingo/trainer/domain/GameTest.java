@@ -18,27 +18,27 @@ class GameTest {
 
     @Test
     @DisplayName("start a new round with length 6 and 7")
-    void startNewRoundWithLength6_7(){
+    void startNewRoundWithLength6_7() {
         Game game = new Game();
         game.startNewRound("WINNERS");
         game.startNewRound("WINNER");
 
-        assertEquals(game.getRounds().size(),2);
+        assertEquals(game.getRounds().size(), 2);
     }
 
-//    @Test
-//    @DisplayName("Player is playing")
-//    void playing(){
-//        Game game = new Game();
-//        game.startNewRound("SPORT");
-//        game.guess("SOORT");
-//
-//        assertTrue(game.isPlaying());
-//    }
+    @Test
+    @DisplayName("Player is playing")
+    void playing() {
+        Game game = new Game();
+        game.startNewRound("SPORT");
+        game.guess("SOORT");
+
+        assertTrue(game.isPlaying());
+    }
 
     @Test
     @DisplayName("Player is not playing")
-    void notPlaying(){
+    void notPlaying() {
         Game game = new Game();
 
         assertFalse(game.isPlaying());
