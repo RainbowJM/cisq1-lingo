@@ -42,6 +42,9 @@ public class Game {
 
         Round round = rounds.get(rounds.size() - 1);
         round.guess(word);
+        if (round.getAttempt() > 5){
+            status = GameStatus.ELIMINATED;
+        }
         calculateScore();
         showProgress();
     }
@@ -51,9 +54,8 @@ public class Game {
         Feedback feedback = round.getFeedbackHistory().get(round.getFeedbackHistory().size() - 1);
 
         List<String> hintList = feedback.getHints();
-
+//error at this line
         String hint = feedback.giveHint(hintList.get(hintList.size() - 1));
-
 
         return new Progress(getStatus(), feedback, score, hint);
     }

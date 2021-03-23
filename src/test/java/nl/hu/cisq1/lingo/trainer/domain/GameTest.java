@@ -26,4 +26,31 @@ class GameTest {
         assertEquals(game.getRounds().size(),2);
     }
 
+//    @Test
+//    @DisplayName("Player is playing")
+//    void playing(){
+//        Game game = new Game();
+//        game.startNewRound("SPORT");
+//        game.guess("SOORT");
+//
+//        assertTrue(game.isPlaying());
+//    }
+
+    @Test
+    @DisplayName("Player is not playing")
+    void notPlaying(){
+        Game game = new Game();
+
+        assertFalse(game.isPlaying());
+    }
+
+//    @Test
+//    @DisplayName("Player not eliminated")
+//    void playerNotEliminated(){
+//        Game game = new Game();
+//        game.startNewRound("SPORT");
+//        game.guess("SOORT");
+//
+//        assertFalse(game.isPlayerEliminated());
+//    }
 }
