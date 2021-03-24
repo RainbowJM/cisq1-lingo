@@ -23,9 +23,6 @@ public class Round {
     @OneToMany
     private final List<Feedback> feedbacks = new ArrayList<>();
 
-//    @ElementCollection
-//    private List<Mark> mark = new ArrayList<>();
-
     public Round() {
     }
 
@@ -109,6 +106,14 @@ public class Round {
         return wordToGuess.length();
     }
 
+    public String getHint() {
+        return this.hint;
+    }
+
+    public int calculateScore() {
+        return 5 * (5 - attempt) + 5;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -122,11 +127,4 @@ public class Round {
         return Objects.hash(wordToGuess, attempt, feedbacks);
     }
 
-    public String getHint() {
-        return this.hint;
-    }
-
-    public int calculateScore() {
-        return 5 * (5 - attempt) + 5;
-    }
 }
