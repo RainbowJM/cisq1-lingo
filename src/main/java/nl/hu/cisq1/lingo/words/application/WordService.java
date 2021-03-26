@@ -1,7 +1,7 @@
 package nl.hu.cisq1.lingo.words.application;
 
 import nl.hu.cisq1.lingo.words.data.SpringWordRepository;
-import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
+import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupported;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,7 +18,7 @@ public class WordService {
     public String provideRandomWord(Integer length) {
         return this.wordRepository
                 .findRandomWordByLength(length)
-                .orElseThrow(() -> new WordLengthNotSupportedException(length))
+                .orElseThrow(() -> new WordLengthNotSupported(length))
                 .getValue();
     }
 }

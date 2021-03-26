@@ -1,7 +1,7 @@
 package nl.hu.cisq1.lingo.words.presentation;
 
 import nl.hu.cisq1.lingo.words.application.WordService;
-import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupportedException;
+import nl.hu.cisq1.lingo.words.domain.exception.WordLengthNotSupported;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,7 @@ public class RandomWordController {
     public String getRandomWord(@RequestParam Integer length) {
         try {
             return this.service.provideRandomWord(length);
-        } catch (WordLengthNotSupportedException exception) {
+        } catch (WordLengthNotSupported exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
         }
     }
