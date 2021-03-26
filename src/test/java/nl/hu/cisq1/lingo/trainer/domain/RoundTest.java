@@ -24,6 +24,7 @@ class RoundTest {
         round.guess(attempt);
 
         Feedback expected = new Feedback(expectedMarks, attempt);
+
         assertEquals(expected, round.getLastFeedback());
     }
 
