@@ -44,13 +44,13 @@ class GameTest {
         assertFalse(game.isPlaying());
     }
 
-//    @Test
-//    @DisplayName("Player not eliminated")
-//    void playerNotEliminated(){
-//        Game game = new Game();
-//        game.startNewRound("SPORT");
-//        game.guess("SOORT");
-//
-//        assertFalse(game.isPlayerEliminated());
-//    }
+    @Test
+    @DisplayName("Player not eliminated")
+    void playerNotEliminated() {
+        Game game = new Game();
+        game.startNewRound("SPORT");
+        game.guess("SOORT");
+
+        assertFalse(game.isPlayerEliminated());
+    }
 }

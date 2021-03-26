@@ -15,15 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class RoundTest {
-    static Stream<Arguments> provideGuessingExamples() {
-        return Stream.of(
-                Arguments.of("BAARD", "BAARD", List.of(CORRECT, CORRECT, CORRECT, CORRECT, CORRECT)),
-                Arguments.of("BAARD", "BARST", List.of(CORRECT, CORRECT, PRESENT, ABSENT, ABSENT)),
-                Arguments.of("BAARD", "DRAAD", List.of(ABSENT, PRESENT, CORRECT, PRESENT, CORRECT)),
-                Arguments.of("BAARD", "BONJE", List.of(CORRECT, ABSENT, ABSENT, ABSENT, ABSENT)),
-                Arguments.of("BAARD", "BARAA", List.of(CORRECT, CORRECT, PRESENT, PRESENT, ABSENT))
-        );
-    }
 
     @ParameterizedTest
     @MethodSource("provideGuessingExamples")
@@ -36,6 +27,16 @@ class RoundTest {
         assertEquals(expected, round.getLastFeedback());
     }
 
+    static Stream<Arguments> provideGuessingExamples() {
+        return Stream.of(
+                Arguments.of("BAARD", "BAARD", List.of(CORRECT, CORRECT, CORRECT, CORRECT, CORRECT)),
+                Arguments.of("BAARD", "BARST", List.of(CORRECT, CORRECT, PRESENT, ABSENT, ABSENT)),
+                Arguments.of("BAARD", "DRAAD", List.of(ABSENT, PRESENT, CORRECT, PRESENT, CORRECT)),
+                Arguments.of("BAARD", "BONJE", List.of(CORRECT, ABSENT, ABSENT, ABSENT, ABSENT)),
+                Arguments.of("BAARD", "BARAA", List.of(CORRECT, CORRECT, PRESENT, PRESENT, ABSENT)),
+                Arguments.of("BAARD", "BAAAA", List.of(CORRECT, CORRECT, CORRECT, ABSENT, ABSENT))
+        );
+    }
 
     @Test
     @DisplayName("give first hint based on word to guess")
@@ -148,23 +149,5 @@ class RoundTest {
         assertEquals(round1.hashCode(), round2.hashCode());
     }
 
-//    @ParameterizedTest
-//    @DisplayName("start a game")
-//    @MethodSource("provideAttemptExamples")
-//    void start(String attemptWord){
-//        Round round = new Round("BAARD");
-//        round.guess(attemptWord);
-//
-//        assertEquals(, );
-//    }
-//
-//    static Stream<Arguments> provideAttemptExamples(){
-//        return Stream.of(
-//                Arguments.of("BERGEN"),
-//                Arguments.of("BONJE"),
-//                Arguments.of("BARST"),
-//                Arguments.of("DRAAD"),
-//                Arguments.of("BAARD")
-//        );
-//    }
+
 }
