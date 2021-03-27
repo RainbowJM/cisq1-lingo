@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAction;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidWordLength;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,13 +20,22 @@ class RoundTest {
     @Test
     @DisplayName("throws exception when length of attempt word not equal to length wordToGuess")
     void lengthNotEqual() {
-        String wordToGuess = "BAARD";
-        String attempt = "BERGEN";
+        Round round = new Round("BAARD");
 
-        Round round = new Round(wordToGuess);
-        round.guess(attempt);
+        assertThrows(InvalidWordLength.class, () -> round.guess("BERGEN"));
+    }
 
-        assertThrows(InvalidWordLength.class, () -> attempt.length());
+    @Test
+    @DisplayName("throws exception when max attempt is reached")
+    void maxAttempt() {
+        Round round = new Round("BAARD");
+        round.guess("BARST");
+        round.guess("DRAAD");
+        round.guess("BONJE");
+        round.guess("BARRA");
+        round.guess("BARAA");
+
+        assertThrows(InvalidAction.class, () -> round.guess("BARAA"));
     }
 
     @ParameterizedTest
@@ -34,12 +44,10 @@ class RoundTest {
     void guessing(String wordToGuess, String attempt, List<Mark> expectedMarks) {
         Round round = new Round(wordToGuess);
         round.guess(attempt);
-        int i = round.getAttempt();
 
         Feedback expected = new Feedback(expectedMarks, attempt);
 
         assertEquals(expected, round.getLastFeedback());
-        assertThrows(InvalidWordLength.class, wordToGuess::length);
     }
 
     static Stream<Arguments> provideGuessingExamples() {
@@ -48,8 +56,7 @@ class RoundTest {
                 Arguments.of("BAARD", "BARST", List.of(CORRECT, CORRECT, PRESENT, ABSENT, ABSENT)),
                 Arguments.of("BAARD", "DRAAD", List.of(ABSENT, PRESENT, CORRECT, PRESENT, CORRECT)),
                 Arguments.of("BAARD", "BONJE", List.of(CORRECT, ABSENT, ABSENT, ABSENT, ABSENT)),
-                Arguments.of("BAARD", "BARAA", List.of(CORRECT, CORRECT, PRESENT, PRESENT, ABSENT)),
-                Arguments.of("BAARD", "BERGEN", List.of(CORRECT, CORRECT, CORRECT, ABSENT, ABSENT))
+                Arguments.of("BAARD", "BARAA", List.of(CORRECT, CORRECT, PRESENT, PRESENT, ABSENT))
         );
     }
 
