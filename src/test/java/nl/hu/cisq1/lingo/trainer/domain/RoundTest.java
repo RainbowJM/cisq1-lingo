@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidWordLength;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,10 +12,21 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RoundTest {
+
+    @Test
+    @DisplayName("throws exception when length of attempt word not equal to length wordToGuess")
+    void lengthNotEqual() {
+        String wordToGuess = "BAARD";
+        String attempt = "BERGEN";
+
+        Round round = new Round(wordToGuess);
+        round.guess(attempt);
+
+        assertThrows(InvalidWordLength.class, () -> attempt.length());
+    }
 
     @ParameterizedTest
     @MethodSource("provideGuessingExamples")
@@ -22,10 +34,12 @@ class RoundTest {
     void guessing(String wordToGuess, String attempt, List<Mark> expectedMarks) {
         Round round = new Round(wordToGuess);
         round.guess(attempt);
+        int i = round.getAttempt();
 
         Feedback expected = new Feedback(expectedMarks, attempt);
 
         assertEquals(expected, round.getLastFeedback());
+        assertThrows(InvalidWordLength.class, wordToGuess::length);
     }
 
     static Stream<Arguments> provideGuessingExamples() {
@@ -35,7 +49,7 @@ class RoundTest {
                 Arguments.of("BAARD", "DRAAD", List.of(ABSENT, PRESENT, CORRECT, PRESENT, CORRECT)),
                 Arguments.of("BAARD", "BONJE", List.of(CORRECT, ABSENT, ABSENT, ABSENT, ABSENT)),
                 Arguments.of("BAARD", "BARAA", List.of(CORRECT, CORRECT, PRESENT, PRESENT, ABSENT)),
-                Arguments.of("BAARD", "BAAAA", List.of(CORRECT, CORRECT, CORRECT, ABSENT, ABSENT))
+                Arguments.of("BAARD", "BERGEN", List.of(CORRECT, CORRECT, CORRECT, ABSENT, ABSENT))
         );
     }
 
@@ -49,7 +63,7 @@ class RoundTest {
 
     @Test
     @DisplayName("check attempt of round")
-    void checkAttempt(){
+    void checkAttempt() {
         String wordToGuess = "APPLE";
         String wordAttempt = "ADOPT";
         Round round = new Round(wordToGuess);
