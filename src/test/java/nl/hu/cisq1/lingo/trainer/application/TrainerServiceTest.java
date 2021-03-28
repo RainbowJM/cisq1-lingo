@@ -27,9 +27,9 @@ class TrainerServiceTest {
         WordService mockWordService = mock(WordService.class);
         when(mockWordService.provideRandomWord(5)).thenReturn("BAARD");
 
-        SpringGameRepository mockRepository = mock(SpringGameRepository.class);
+        SpringGameRepository mockGameRepository = mock(SpringGameRepository.class);
 
-        TrainerService trainerService = new TrainerService(mockWordService, mockRepository);
+        TrainerService trainerService = new TrainerService(mockWordService, mockGameRepository);
         Progress progress = trainerService.startNewGame();
 
         List<String> hint = List.of("B", ".", ".", ".", ".");
@@ -55,6 +55,26 @@ class TrainerServiceTest {
         Progress progress = trainerService.startNewRound(0L);
 
         List<String> hint = List.of("H", ".", ".", ".", ".", ".");
+
+        assertEquals(String.join("", hint), progress.getHint());
+        assertEquals(GameStatus.PLAYING, progress.getStatus());
+    }
+
+    @Test
+    @DisplayName("guess round in current game")
+    void guess() {
+        WordService mockWordService = mock(WordService.class);
+
+        Game game = new Game();
+        game.startNewRound("BAARD");
+
+        SpringGameRepository mockGameRepository = mock(SpringGameRepository.class);
+        when(mockGameRepository.findById(anyLong())).thenReturn(Optional.of(game));
+
+        TrainerService trainerService = new TrainerService(mockWordService, mockGameRepository);
+        Progress progress = trainerService.guess(0L, "BONJE");
+
+        List<String> hint = List.of("B", ".", ".", ".", ".");
 
         assertEquals(String.join("", hint), progress.getHint());
         assertEquals(GameStatus.PLAYING, progress.getStatus());
