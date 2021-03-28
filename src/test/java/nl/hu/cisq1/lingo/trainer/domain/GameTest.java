@@ -8,8 +8,23 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameTest {
 
     @Test
+    @DisplayName("game status is eliminated")
+    void Eliminated() {
+        Game game = new Game();
+        game.startNewRound("BAARD");
+        game.guess("BARST");
+        game.guess("DRAAD");
+        game.guess("BONJE");
+        game.guess("BARRA");
+        game.guess("BARAA");
+        game.guess("BARAA");
+
+        assertTrue(game.isPlayerEliminated());
+    }
+
+    @Test
     @DisplayName("start a new round with length 5")
-    void startNewRoundWithLength5(){
+    void startNewRoundWithLength5() {
         Game game = new Game();
         game.startNewRound("SPORT");
 

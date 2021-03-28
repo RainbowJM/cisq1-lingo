@@ -34,6 +34,7 @@ class RoundTest {
         round.guess("BONJE");
         round.guess("BARRA");
         round.guess("BARAA");
+        round.guess("BARAA");
 
         assertThrows(InvalidAction.class, () -> round.guess("BARAA"));
     }
