@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.application;
 
+import nl.hu.cisq1.lingo.trainer.application.exception.GameNotFound;
 import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Game;
 import nl.hu.cisq1.lingo.trainer.domain.GameStatus;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -56,5 +58,19 @@ class TrainerServiceTest {
 
         assertEquals(String.join("", hint), progress.getHint());
         assertEquals(GameStatus.PLAYING, progress.getStatus());
+    }
+
+    @Test
+    @DisplayName("throws exception if game not found")
+    void gameNotFund() {
+        WordService mockWordService = mock(WordService.class);
+        when(mockWordService.provideRandomWord(5)).thenReturn("BAARD");
+
+        SpringGameRepository mockGameRepository = mock(SpringGameRepository.class);
+        when(mockGameRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        TrainerService trainerService = new TrainerService(mockWordService, mockGameRepository);
+
+        assertThrows(GameNotFound.class, () -> trainerService.getGameById(anyLong()));
     }
 }

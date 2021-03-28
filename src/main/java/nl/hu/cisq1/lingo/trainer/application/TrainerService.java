@@ -49,7 +49,7 @@ public class TrainerService {
         return game.showProgress();
     }
 
-    private Game getGameById(Long gameId) {
+    public Game getGameById(Long gameId) {
         return this.gameRepository.findById(gameId)
                 .orElseThrow(GameNotFound::new);
     }
