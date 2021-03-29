@@ -20,6 +20,7 @@ public class Round {
     private int attempt;
     private String hint;
 
+    @JoinTable
     @OneToMany
     private final List<Feedback> feedbacks = new ArrayList<>();
 
