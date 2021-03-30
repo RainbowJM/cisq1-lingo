@@ -14,7 +14,7 @@ public class Game {
 
     private int score = 0;
 
-    @JoinTable
+    @JoinColumn
     @OneToMany(cascade = CascadeType.ALL)
     private final List<Round> rounds = new ArrayList<>();
 

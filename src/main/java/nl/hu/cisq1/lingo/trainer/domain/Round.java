@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 @Entity
 public class Round {
     public static final int MAX_ATTEMPT = 5;
@@ -20,8 +21,8 @@ public class Round {
     private int attempt;
     private String hint;
 
-    @JoinTable
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
     private final List<Feedback> feedbacks = new ArrayList<>();
 
     public Round() {
