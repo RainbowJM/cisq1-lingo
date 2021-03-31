@@ -1,6 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAction;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class Game {
 
     @JoinColumn
     @OneToMany(cascade = CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private final List<Round> rounds = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -42,6 +44,7 @@ public class Game {
 
         Round round = this.getLastRound();
         round.guess(word);
+        updateScore();
 
         if (round.getAttempt() > 5) {
             status = GameStatus.ELIMINATED;
@@ -60,9 +63,16 @@ public class Game {
                 this.id,
                 this.status,
                 lastRound.getFeedbackHistory(),
-                score + lastRound.calculateScore(),
+                score, // + lastRound.calculateScore(),
                 lastRound.getHint()
         );
+    }
+
+    private int updateScore() {
+        Round lastRound = this.getLastRound();
+
+        score += lastRound.calculateScore();
+        return score;
     }
 
     private Round getLastRound() {

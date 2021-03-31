@@ -2,6 +2,7 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAction;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidWordLength;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class Round {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private final List<Feedback> feedbacks = new ArrayList<>();
 
     public Round() {
@@ -49,6 +51,7 @@ public class Round {
         this.hint = feedback.giveHint(this.hint);
 
         this.attempt++;
+        calculateScore();
     }
 
     private List<Mark> giveListMark(String attemptWord) {
