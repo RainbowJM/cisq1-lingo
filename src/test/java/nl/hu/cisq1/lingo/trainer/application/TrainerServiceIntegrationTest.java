@@ -31,4 +31,5 @@ class TrainerServiceIntegrationTest {
         assertEquals(5, progress.getHint().length());
         assertEquals(0, progress.getFeedback().size());
     }
+
 }
