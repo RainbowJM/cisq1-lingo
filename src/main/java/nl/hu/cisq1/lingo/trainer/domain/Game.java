@@ -27,7 +27,9 @@ public class Game {
     }
 
     public void startNewRound(String wordToGuess) {
-        // invalid action??? TODO
+        if (status != GameStatus.START) {
+            throw new InvalidAction("Game is already playing");
+        }
 
         status = GameStatus.PLAYING;
 
