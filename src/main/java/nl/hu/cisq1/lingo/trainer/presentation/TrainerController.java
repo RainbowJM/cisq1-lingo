@@ -5,12 +5,12 @@ import nl.hu.cisq1.lingo.trainer.application.exception.GameNotFound;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAction;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidWordLength;
+import nl.hu.cisq1.lingo.trainer.presentation.DTO.Guess;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/trainer")
@@ -42,9 +42,9 @@ public class TrainerController {
     }
 
     @PostMapping("/games/{id}/round/guess")
-    public Progress guess(@PathVariable Long id, String attempt) {
+    public Progress guess(@PathVariable Long id, @Valid @RequestBody Guess guess) {
         try {
-            return service.guess(id, attempt);
+            return service.guess(id, guess.attempt);
         } catch (GameNotFound e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (InvalidAction e) {
