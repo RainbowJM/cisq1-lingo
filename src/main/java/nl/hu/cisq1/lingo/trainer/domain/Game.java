@@ -27,6 +27,8 @@ public class Game {
     }
 
     public void startNewRound(String wordToGuess) {
+        // invalid action??? TODO
+
         status = GameStatus.PLAYING;
 
         if (!rounds.isEmpty()) {
@@ -65,7 +67,7 @@ public class Game {
                 this.id,
                 this.status,
                 lastRound.getFeedbackHistory(),
-                score, // + lastRound.calculateScore(),
+                score, // + lastRound.calculateScore(), TODO
                 lastRound.getHint()
         );
     }
