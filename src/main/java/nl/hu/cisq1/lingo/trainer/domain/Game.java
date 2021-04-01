@@ -43,6 +43,8 @@ public class Game {
         }
 
         Round round = this.getLastRound();
+        System.out.println(round);
+        System.out.println(word);
         round.guess(word);
         updateScore();
 
