@@ -4,7 +4,6 @@ import nl.hu.cisq1.lingo.trainer.application.TrainerService;
 import nl.hu.cisq1.lingo.trainer.application.exception.GameNotFound;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAction;
-import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidWordLength;
 import nl.hu.cisq1.lingo.trainer.presentation.DTO.Guess;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -47,10 +46,6 @@ public class TrainerController {
             return service.guess(id, guess.attempt);
         } catch (GameNotFound e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (InvalidAction e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        } catch (InvalidWordLength e) {
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, e.getMessage());
         }
     }
 }
