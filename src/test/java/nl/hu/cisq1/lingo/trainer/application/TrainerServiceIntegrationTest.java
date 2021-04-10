@@ -3,6 +3,7 @@ package nl.hu.cisq1.lingo.trainer.application;
 import nl.hu.cisq1.lingo.CiTestConfiguration;
 import nl.hu.cisq1.lingo.trainer.domain.GameStatus;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
+import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Import(CiTestConfiguration.class)
@@ -32,4 +34,12 @@ class TrainerServiceIntegrationTest {
         assertEquals(0, progress.getFeedback().size());
     }
 
+    @Test
+    @DisplayName("cannot start a new round when still playing")
+    void noNewRoundStarted() {
+        Progress progress = service.startNewGame();
+        Long id = progress.getId();
+
+        assertThrows(InvalidAction.class, () -> service.startNewRound(id));
+    }
 }
