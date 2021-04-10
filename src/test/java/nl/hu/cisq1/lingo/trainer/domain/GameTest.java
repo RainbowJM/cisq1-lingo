@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,6 +14,23 @@ import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
+
+    @Test
+    @DisplayName("throws exception when status is playing already")
+    void statusPlaying() {
+        Game game = new Game();
+        game.startNewRound("wordToGuess");
+
+        assertThrows(InvalidAction.class, () -> game.startNewRound("wordToGuess"));
+    }
+
+    @Test
+    @DisplayName("throws exception when status is not playing when attempt a guess")
+    void statusNotPlaying() {
+        Game game = new Game();
+
+        assertThrows(InvalidAction.class, () -> game.guess("attempt"));
+    }
 
     @ParameterizedTest
     @MethodSource("provideGuessingExamples")

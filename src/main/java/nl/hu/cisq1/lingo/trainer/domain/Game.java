@@ -33,10 +33,6 @@ public class Game {
 
         status = GameStatus.PLAYING;
 
-        if (!rounds.isEmpty()) {
-            this.score += updateScore();
-        }
-
         Round newRound = new Round(wordToGuess);
         rounds.add(newRound);
     }
@@ -63,7 +59,6 @@ public class Game {
 
         if (feedback.isWordGuessed()) {
             status = GameStatus.WON;
-
             provideNewWordLength();
         }
 
@@ -76,7 +71,7 @@ public class Game {
                 this.id,
                 this.status,
                 lastRound.getFeedbackHistory(),
-                score, // + lastRound.calculateScore(), TODO
+                score,
                 lastRound.getHint()
         );
     }
