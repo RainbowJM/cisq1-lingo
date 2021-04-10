@@ -61,6 +61,25 @@ class RoundTest {
         );
     }
 
+    @ParameterizedTest
+    @DisplayName("get next word length based on current word length")
+    @MethodSource("wordLengthExamples")
+    void nextWordLength(String wordToGuess, int nextLength) {
+        Game game = new Game();
+        game.startNewRound(wordToGuess);
+
+        assertEquals(nextLength, game.provideNewWordLength());
+    }
+
+    static Stream<Arguments> wordLengthExamples() {
+        return Stream.of(
+                Arguments.of("baard", 6),
+                Arguments.of("bergen", 7),
+                Arguments.of("baarden", 5),
+                Arguments.of("bord", 5)
+        );
+    }
+
     @Test
     @DisplayName("give first hint based on word to guess")
     void giveFirstHint() {
@@ -108,25 +127,10 @@ class RoundTest {
     @DisplayName("feedback same, when value is same")
     void roundSame() {
         // round 1
-        String word1 = "SOORT";
-        List<Mark> markList1 = List.of(CORRECT, Mark.ABSENT, CORRECT, CORRECT, CORRECT);
-
-        Feedback feedback1 = new Feedback(markList1, word1);
-        List<Feedback> feedbacks1 = new ArrayList<>();
-        feedbacks1.add(feedback1);
-
         Round round1 = new Round("SPORT");
 
         // round2
-        String word2 = "SOORT";
-        List<Mark> markList2 = List.of(CORRECT, Mark.ABSENT, CORRECT, CORRECT, CORRECT);
-
-        Feedback feedback2 = new Feedback(markList2, word2);
-        List<Feedback> feedbacks2 = new ArrayList<>();
-        feedbacks2.add(feedback2);
-
         Round round2 = new Round("SPORT");
-
 
         assertEquals(round1, round2);
     }
