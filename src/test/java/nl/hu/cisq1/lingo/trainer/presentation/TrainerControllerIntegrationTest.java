@@ -111,21 +111,4 @@ public class TrainerControllerIntegrationTest {
         mockMvc.perform(request)
                 .andExpect(status().isBadRequest());
     }
-
-    @Test
-    @DisplayName("guess attempt but action is not allowed")
-    void notAllowGuess() throws Exception {
-//        Game game = new Game();
-//        game.startNewRound("BAARD");
-//
-//        when(gameRepository.findById(0L))
-//                .thenReturn(Optional.of(game));
-//        when(wordRepository.findRandomWordByLength(6))
-//                .thenReturn(Optional.of(new Word("HOEDEN")));
-
-        RequestBuilder request = MockMvcRequestBuilders.post("/trainer/games/0/round/guess");
-
-        mockMvc.perform(request)
-                .andExpect(status().isBadRequest());
-    }
 }

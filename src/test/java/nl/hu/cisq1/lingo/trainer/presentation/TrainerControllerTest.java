@@ -63,4 +63,20 @@ class TrainerControllerTest {
                 .andExpect(jsonPath("$.id", greaterThanOrEqualTo(0)))
                 .andExpect(jsonPath("$.feedback", hasSize(1)));
     }
+
+    @Test
+    @DisplayName("guess attempt but game not found")
+    void guessAttemptGameNotFound() throws Exception {
+        Guess guess = new Guess();
+        guess.attempt = "BARST";
+        String guessBody = new ObjectMapper().writeValueAsString(guess);
+
+        RequestBuilder guessRequest = MockMvcRequestBuilders
+                .post("/trainer/games/00/round/guess")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(guessBody);
+
+        mockMvc.perform(guessRequest)
+                .andExpect(status().isNotFound());
+    }
 }
