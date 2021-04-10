@@ -36,7 +36,6 @@ public class Round {
     }
 
     public void guess(String attemptWord) {
-        System.out.println(attemptWord);
         if (attemptWord.length() != wordToGuess.length()) {
             throw new InvalidWordLength();
         }
@@ -52,7 +51,7 @@ public class Round {
         this.hint = feedback.giveHint(this.hint);
 
         this.attempt++;
-        calculateScore();
+//        calculateScore();
     }
 
     private List<Mark> giveListMark(String attemptWord) {
