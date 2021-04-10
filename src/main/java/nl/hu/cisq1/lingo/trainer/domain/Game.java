@@ -27,14 +27,14 @@ public class Game {
     }
 
     public void startNewRound(String wordToGuess) {
-        if (status != GameStatus.START) {
+        if (status == GameStatus.PLAYING) {
             throw new InvalidAction("Game is already playing");
         }
 
         status = GameStatus.PLAYING;
 
         if (!rounds.isEmpty()) {
-            this.score += this.getLastRound().calculateScore();
+            this.score += updateScore();
         }
 
         Round newRound = new Round(wordToGuess);
@@ -47,9 +47,8 @@ public class Game {
         }
 
         Round round = this.getLastRound();
-        System.out.println(round);
-        System.out.println(word);
         round.guess(word);
+        isWordGuessed();
         updateScore();
 
         if (round.getAttempt() > 5) {
@@ -57,9 +56,17 @@ public class Game {
         }
     }
 
-    public boolean isWordGuessed() {
+    public void isWordGuessed() {
         // Use for automatically starting new round
-        return false;
+        Round lastRound = this.getLastRound();
+        Feedback feedback = lastRound.getLastFeedback();
+
+        if (feedback.isWordGuessed()) {
+            status = GameStatus.WON;
+
+            provideNewWordLength();
+        }
+
     }
 
     public Progress showProgress() {
@@ -76,8 +83,12 @@ public class Game {
 
     private int updateScore() {
         Round lastRound = this.getLastRound();
+        Feedback feedback = lastRound.getLastFeedback();
 
-        score += lastRound.calculateScore();
+        if (feedback.isWordGuessed()) {
+            score += lastRound.calculateScore();
+            status = GameStatus.WON;
+        }
         return score;
     }
 
