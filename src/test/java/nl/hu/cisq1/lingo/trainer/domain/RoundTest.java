@@ -8,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -40,7 +39,7 @@ class RoundTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideGuessingExamples")
+    @MethodSource("provideGuessingExamplesInRound")
     @DisplayName("guessing a word")
     void guessing(String wordToGuess, String attempt, List<Mark> expectedMarks) {
         Round round = new Round(wordToGuess);
@@ -51,7 +50,7 @@ class RoundTest {
         assertEquals(expected, round.getLastFeedback());
     }
 
-    static Stream<Arguments> provideGuessingExamples() {
+    static Stream<Arguments> provideGuessingExamplesInRound() {
         return Stream.of(
                 Arguments.of("BAARD", "BAARD", List.of(CORRECT, CORRECT, CORRECT, CORRECT, CORRECT)),
                 Arguments.of("BAARD", "BARST", List.of(CORRECT, CORRECT, PRESENT, ABSENT, ABSENT)),
@@ -63,7 +62,7 @@ class RoundTest {
 
     @ParameterizedTest
     @DisplayName("get next word length based on current word length")
-    @MethodSource("wordLengthExamples")
+    @MethodSource("provideWordLengthExamples")
     void nextWordLength(String wordToGuess, int nextLength) {
         Game game = new Game();
         game.startNewRound(wordToGuess);
@@ -71,7 +70,7 @@ class RoundTest {
         assertEquals(nextLength, game.provideNewWordLength());
     }
 
-    static Stream<Arguments> wordLengthExamples() {
+    static Stream<Arguments> provideWordLengthExamples() {
         return Stream.of(
                 Arguments.of("baard", 6),
                 Arguments.of("bergen", 7),
@@ -153,25 +152,10 @@ class RoundTest {
     @DisplayName("hashcode values of round class the same")
     void hashCodeGeneratorSameRound() {
         // round 1
-        String word1 = "SOORT";
-        List<Mark> markList1 = List.of(CORRECT, Mark.ABSENT, CORRECT, CORRECT, CORRECT);
-
-        Feedback feedback1 = new Feedback(markList1, word1);
-        List<Feedback> feedbacks1 = new ArrayList<>();
-        feedbacks1.add(feedback1);
-
         Round round1 = new Round("SPORT");
 
         // round2
-        String word2 = "SOORT";
-        List<Mark> markList2 = List.of(CORRECT, Mark.ABSENT, CORRECT, CORRECT, CORRECT);
-
-        Feedback feedback2 = new Feedback(markList2, word2);
-        List<Feedback> feedbacks2 = new ArrayList<>();
-        feedbacks2.add(feedback2);
-
         Round round2 = new Round("SPORT");
-
 
         assertEquals(round1.hashCode(), round2.hashCode());
     }
