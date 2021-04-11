@@ -50,7 +50,6 @@ public class Round {
         this.hint = feedback.giveHint(this.hint);
 
         this.attempt++;
-//        calculateScore();
     }
 
     private List<Mark> giveListMark(String attemptWord) {
