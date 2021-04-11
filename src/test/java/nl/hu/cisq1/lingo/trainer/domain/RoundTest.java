@@ -72,7 +72,7 @@ class RoundTest {
         Round round = new Round(wordToGuess);
         round.guess(wordAttempt);
 
-        assertEquals(round.getAttempt(), 1);
+        assertEquals(1, round.getAttempt());
     }
 
     @Test
