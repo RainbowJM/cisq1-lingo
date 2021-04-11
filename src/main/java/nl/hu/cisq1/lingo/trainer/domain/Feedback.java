@@ -1,5 +1,9 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.State;
+
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@State(Scope.Benchmark)
 @Entity
 public class Feedback {
     @Id
@@ -27,6 +32,7 @@ public class Feedback {
         this.attempt = attempt;
     }
 
+    @Benchmark
     public boolean isWordGuessed() {
         //.stream() maakt van een collectie (een verzameling elementen) een stream (een reeks elementen waar je over tijd bewerkingen op kunt doen)
         // .allMatch geeft een boolean terug op basis van de meegegeven functie
