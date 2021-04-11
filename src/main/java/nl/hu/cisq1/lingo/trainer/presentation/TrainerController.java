@@ -4,7 +4,7 @@ import nl.hu.cisq1.lingo.trainer.application.TrainerService;
 import nl.hu.cisq1.lingo.trainer.application.exception.GameNotFound;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAction;
-import nl.hu.cisq1.lingo.trainer.presentation.DTO.Guess;
+import nl.hu.cisq1.lingo.trainer.presentation.dto.Guess;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;

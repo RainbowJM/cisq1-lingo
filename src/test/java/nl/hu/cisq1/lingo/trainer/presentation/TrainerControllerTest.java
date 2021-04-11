@@ -3,7 +3,7 @@ package nl.hu.cisq1.lingo.trainer.presentation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import nl.hu.cisq1.lingo.CiTestConfiguration;
-import nl.hu.cisq1.lingo.trainer.presentation.DTO.Guess;
+import nl.hu.cisq1.lingo.trainer.presentation.dto.Guess;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
