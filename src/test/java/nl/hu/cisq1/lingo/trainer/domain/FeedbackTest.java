@@ -92,70 +92,18 @@ class FeedbackTest {
         assertNotEquals(feedback1, feedback2);
     }
 
-    @Test
-    @DisplayName("feedback the same, when value are the same")
-    void feedbackSame() {
-        Feedback feedback1 = new Feedback(
-                List.of(Mark.CORRECT, Mark.CORRECT),
-                "APPLE");
-        Feedback feedback2 = new Feedback(
-                List.of(Mark.CORRECT, Mark.CORRECT),
-                "APPLE");
-
-        assertEquals(feedback1, feedback2);
-    }
-
-    @Test
-    @DisplayName("hashcode values the same")
-    void hashCodeGeneratorSame() {
-        Feedback feedback1 = new Feedback(
-                List.of(Mark.CORRECT, Mark.CORRECT),
-                "APPLE");
-        Feedback feedback2 = new Feedback(
-                List.of(Mark.CORRECT, Mark.CORRECT),
-                "APPLE");
-
-        assertEquals(feedback1.hashCode(), feedback2.hashCode());
-    }
-
-    @Test
-    @DisplayName("hashcode values not same")
-    void hashCodeGeneratorNotTheSame() {
-        Feedback feedback1 = new Feedback(
-                List.of(Mark.CORRECT, Mark.PRESENT),
-                "APPLE");
-        Feedback feedback2 = new Feedback(
-                List.of(Mark.CORRECT, Mark.CORRECT),
-                "APPLE");
-
-        assertNotEquals(feedback1.hashCode(), feedback2.hashCode());
-    }
-
-    @Test
-    @DisplayName("contains class name")
-    void convertedToString() {
-        Feedback feedback1 = new Feedback(
-                List.of(Mark.CORRECT, Mark.CORRECT),
-                "APPLE");
-
-        assertTrue(feedback1.toString().contains("Feedback"));
-    }
-
     @ParameterizedTest
     @DisplayName("give hint based on attempt")
     @MethodSource("provideHintExamples")
     void getHint(String attempt, String previousHint, String expectedHint) {
         // given
-//        String attempt = "SOORT";
         List<Mark> markList = List.of(Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.CORRECT);
         Feedback feedback = new Feedback(markList, attempt);
-//        String previousHint = "SP...";
 
         // when
         String hint = feedback.giveHint(previousHint);
 
         // then
-//        String expectedHint = "SP..T";
         assertEquals(expectedHint, hint);
     }
 
@@ -166,4 +114,10 @@ class FeedbackTest {
         );
     }
 
+//    @Test
+//    @DisplayName("")
+//    void equalsTest(){
+//        EqualsVerifier.forClass(Feedback.class).verify();
+//        Equals
+//    }
 }
