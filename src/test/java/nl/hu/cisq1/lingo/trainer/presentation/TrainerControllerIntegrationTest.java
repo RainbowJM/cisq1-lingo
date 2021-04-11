@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TrainerControllerIntegrationTest {
+class TrainerControllerIntegrationTest {
 
     @MockBean
     private SpringWordRepository wordRepository;

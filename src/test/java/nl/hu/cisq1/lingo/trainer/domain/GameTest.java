@@ -78,7 +78,7 @@ class GameTest {
         Game game = new Game();
         game.startNewRound("SPORT");
 
-        assertEquals(game.getRounds().size(), 1);
+        assertEquals(1, game.getRounds().size());
     }
 
     @Test

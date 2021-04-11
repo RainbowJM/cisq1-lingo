@@ -24,6 +24,7 @@ public class Game {
     private GameStatus status = GameStatus.START;
 
     public Game() {
+        // This is for Hibernate
     }
 
     public void startNewRound(String wordToGuess) {
