@@ -37,28 +37,6 @@ class RoundTest {
         assertThrows(InvalidAction.class, () -> round.guess("BARAA"));
     }
 
-//    @ParameterizedTest
-//    @MethodSource("provideGuessingExamplesInRound")
-//    @DisplayName("guessing a word")
-//    void guessing(String wordToGuess, String attempt, List<Mark> expectedMarks) {
-//        Round round = new Round(wordToGuess);
-//        round.guess(attempt);
-//
-//        Feedback expected = new Feedback(expectedMarks, attempt);
-//
-//        assertEquals(expected, round.getLastFeedback());
-//    }
-//
-//    static Stream<Arguments> provideGuessingExamplesInRound() {
-//        return Stream.of(
-//                Arguments.of("BAARD", "BAARD", List.of(CORRECT, CORRECT, CORRECT, CORRECT, CORRECT)),
-//                Arguments.of("BAARD", "BARST", List.of(CORRECT, CORRECT, PRESENT, ABSENT, ABSENT)),
-//                Arguments.of("BAARD", "DRAAD", List.of(ABSENT, PRESENT, CORRECT, PRESENT, CORRECT)),
-//                Arguments.of("BAARD", "BONJE", List.of(CORRECT, ABSENT, ABSENT, ABSENT, ABSENT)),
-//                Arguments.of("BAARD", "BARAA", List.of(CORRECT, CORRECT, PRESENT, PRESENT, ABSENT))
-//        );
-//    }
-
     @ParameterizedTest
     @DisplayName("get next word length based on current word length")
     @MethodSource("provideWordLengthExamples")
