@@ -114,10 +114,65 @@ class FeedbackTest {
         );
     }
 
-//    @Test
-//    @DisplayName("")
-//    void equalsTest(){
-//        EqualsVerifier.forClass(Feedback.class).verify();
-//        Equals
-//    }
+    @Test
+    @DisplayName("feedback the same, when value are the same")
+    void feedbackSame() {
+        Feedback feedback1 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
+        Feedback feedback2 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
+
+        assertEquals(feedback1, feedback2);
+    }
+
+    @Test
+    @DisplayName("feedback not the same, when value are not the same")
+    void feedbackNotSame() {
+        Feedback feedback1 = new Feedback(
+                List.of(Mark.CORRECT, Mark.INVALID),
+                "APPE");
+        Feedback feedback2 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
+
+        assertNotEquals(feedback1, null);
+    }
+
+    @Test
+    @DisplayName("hashcode values the same")
+    void hashCodeGeneratorSame() {
+        Feedback feedback1 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
+        Feedback feedback2 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
+
+        assertEquals(feedback1.hashCode(), feedback2.hashCode());
+    }
+
+    @Test
+    @DisplayName("hashcode values not same")
+    void hashCodeGeneratorNotTheSame() {
+        Feedback feedback1 = new Feedback(
+                List.of(Mark.CORRECT, Mark.PRESENT),
+                "APPLE");
+        Feedback feedback2 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
+
+        assertNotEquals(feedback1.hashCode(), feedback2.hashCode());
+    }
+
+    @Test
+    @DisplayName("contains class name")
+    void convertedToString() {
+        Feedback feedback1 = new Feedback(
+                List.of(Mark.CORRECT, Mark.CORRECT),
+                "APPLE");
+
+        assertTrue(feedback1.toString().contains("Feedback"));
+    }
 }
