@@ -117,18 +117,4 @@ public class Round {
     public int calculateScore() {
         return 5 * (5 - attempt) + 5;
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Round round = (Round) o;
-//        return attempt == round.attempt && Objects.equals(wordToGuess, round.wordToGuess) && Objects.equals(feedbacks, round.feedbacks);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(wordToGuess, attempt, feedbacks);
-//    }
-
 }
