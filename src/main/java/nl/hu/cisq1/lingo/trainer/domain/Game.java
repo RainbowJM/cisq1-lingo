@@ -76,7 +76,7 @@ public class Game {
         );
     }
 
-    private int updateScore() {
+    private void updateScore() {
         Round lastRound = this.getLastRound();
         Feedback feedback = lastRound.getLastFeedback();
 
@@ -84,7 +84,6 @@ public class Game {
             score += lastRound.calculateScore();
             status = GameStatus.WON;
         }
-        return score;
     }
 
     private Round getLastRound() {
