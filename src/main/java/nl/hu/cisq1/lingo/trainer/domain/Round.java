@@ -59,32 +59,37 @@ public class Round {
         List<Mark> marks = new ArrayList<>();
         List<String> available = new ArrayList<>();
 
-        for (int i = 0; i < lettersWordToGuess.length; i++) {
-            String letterWordToGuess = lettersWordToGuess[i];
-            String letterAttemptWord = lettersAttemptWord[i];
+        if (!lettersAttemptWord[0].equals(lettersWordToGuess[0])) {
+            for (int i = 0; i < lettersAttemptWord.length; i++) {
+                marks.add(Mark.INVALID);
+            }
+        } else {
+            for (int i = 0; i < lettersWordToGuess.length; i++) {
+                String letterWordToGuess = lettersWordToGuess[i];
+                String letterAttemptWord = lettersAttemptWord[i];
 
-            if (letterAttemptWord.equals(letterWordToGuess)) {
-                marks.add(Mark.CORRECT);
-            } else {
-                marks.add(null);
-                available.add(letterWordToGuess);
+                if (letterAttemptWord.equals(letterWordToGuess)) {
+                    marks.add(Mark.CORRECT);
+                } else {
+                    marks.add(null);
+                    available.add(letterWordToGuess);
+                }
+            }
+
+            for (int j = 0; j < marks.size(); j++) {
+                if (marks.get(j) != null) {
+                    continue;
+                }
+
+                String attemptLetter = lettersAttemptWord[j];
+                if (available.contains(attemptLetter)) {
+                    marks.set(j, Mark.PRESENT);
+                    available.remove(attemptLetter);
+                } else {
+                    marks.set(j, Mark.ABSENT);
+                }
             }
         }
-
-        for (int j = 0; j < marks.size(); j++) {
-            if (marks.get(j) != null) {
-                continue;
-            }
-
-            String attemptLetter = lettersAttemptWord[j];
-            if (available.contains(attemptLetter)) {
-                marks.set(j, Mark.PRESENT);
-                available.remove(attemptLetter);
-            } else {
-                marks.set(j, Mark.ABSENT);
-            }
-        }
-
         return marks;
     }
 
